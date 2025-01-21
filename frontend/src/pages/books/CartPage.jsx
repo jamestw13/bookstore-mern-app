@@ -7,7 +7,7 @@ import { removeFromCart, clearCart } from '../../redux/features/cart/cartSlice';
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector(state => state.cart.cartItems);
-  const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0);
+  const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
   const handleClearCart = () => {
     dispatch(clearCart());
   };
@@ -35,7 +35,7 @@ const Cart = () => {
             <ul role="list" className="-my-6 divide-y divide-gray-200">
               {cartItems?.length > 0 ? (
                 cartItems.map((product, i) => (
-                  <li className="flex py-6">
+                  <li key={i} className="flex py-6">
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                       <img
                         alt=""
