@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import { HiMiniBars3CenterLeft, HiOutlineHeart, HiOutlineUser, HiOutlineShoppingCart } from 'react-icons/hi2';
 import { IoSearchOutline } from 'react-icons/io5';
 import avatarImg from '../assets/avatar.png';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const currentUser = false;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const cartItems = useSelector(state => state.cart.cartItems);
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard' },
@@ -78,7 +80,7 @@ const Navbar = () => {
           </button>
           <Link to="/cart" className="bg-primary p-1 sm:px-6 px-2 flex items-center rounded-sm">
             <HiOutlineShoppingCart />
-            <span className="text-sm font-semibold sm:ml-1">0</span>
+            <span className="text-sm font-semibold sm:ml-1">{cartItems?.length > 0 ? cartItems.length : ''}</span>
           </Link>
         </div>
       </nav>
