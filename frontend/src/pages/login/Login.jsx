@@ -9,6 +9,9 @@ const Login = () => {
   const onSubmit = data => {
     console.log(data);
   };
+
+  const handleGoogleSignIn = () => {};
+
   return (
     <div className="h-[calc(100vh-120px)] flex justify-center items-center">
       <div className="w-full max-w-sm mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -40,9 +43,11 @@ const Login = () => {
               placeholder="Password"
             />
           </div>
-          {message && <p className="text-red-500">{message}</p>}
-          <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded focus:online-none focus:shadow">
-            <button>Login</button>
+          {message && <p className="text-red-500 text-xs italic mb-3">{message}</p>}
+          <div>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded focus:online-none focus:shadow">
+              Login
+            </button>
           </div>
         </form>
         <p className="align-baseline font-medium mt-4 text-sm">
@@ -52,7 +57,10 @@ const Login = () => {
           </Link>
         </p>
         <div className="mt-4">
-          <button className="w-rull flex flex-wreap gap-1 items-center justify-center bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none">
+          <button
+            onClick={handleGoogleSignIn}
+            className="w-rull flex flex-wreap gap-1 items-center justify-center bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none"
+          >
             <FaGoogle className="mr-2" />
             Sign in with Google
           </button>

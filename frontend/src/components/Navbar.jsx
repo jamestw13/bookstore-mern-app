@@ -5,7 +5,7 @@ import { IoSearchOutline } from 'react-icons/io5';
 import avatarImg from '../assets/avatar.png';
 
 const Navbar = () => {
-  const currentUser = true;
+  const currentUser = false;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const navigation = [
@@ -76,7 +76,7 @@ const Navbar = () => {
           <button className="hidden sm:block">
             <HiOutlineHeart className="size-6" />
           </button>
-          <Link to="/cart" className="bg-[#FFCE1A] p-1 sm:px-6 px-2 flex items-center rounded-sm">
+          <Link to="/cart" className="bg-primary p-1 sm:px-6 px-2 flex items-center rounded-sm">
             <HiOutlineShoppingCart />
             <span className="text-sm font-semibold sm:ml-1">0</span>
           </Link>
