@@ -1,4 +1,4 @@
-const Order = require('./order.model');
+const Order = require('./Order.model');
 
 const createAnOrder = async (req, res) => {
   try {
@@ -66,4 +66,4 @@ module.exports = {
   getAnOrder,
   editAnOrder,
   deleteAnOrder,
-} = require('./order.controller');
+};

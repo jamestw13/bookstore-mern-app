@@ -15,7 +15,9 @@ app.use(
 );
 
 const bookRoutes = require('./src/books/book.route');
+const orderRoutes = require('./src/orders/order.route');
 app.use('/api/books', bookRoutes);
+app.use('/api/orders', orderRoutes);
 
 mongoose.connect('mongodb://127.0.0.1:27017/bookstore');
 mongoose.connection.on('connected', () => {
