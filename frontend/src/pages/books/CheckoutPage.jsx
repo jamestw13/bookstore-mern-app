@@ -29,7 +29,6 @@ const CheckoutPage = () => {
       productIds: cartItems.map(item => item?._id),
       totalPrice: totalPrice,
     };
-    console.log(newOrder);
 
     try {
       if (newOrder.productIds.length === 0) {

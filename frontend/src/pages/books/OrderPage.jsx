@@ -13,7 +13,7 @@ const OrderPage = () => {
   if (isError) {
     return <div>Error occurred while loading orders</div>;
   }
-  console.log(orders);
+
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-2xl font-semibold mb-4">Your Orders</h1>

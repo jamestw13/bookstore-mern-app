@@ -2,7 +2,6 @@ const Order = require('./Order.model');
 
 const createAnOrder = async (req, res) => {
   try {
-    console.log(req.body);
     const newOrder = await Order(req.body);
     await newOrder.save();
     res.status(200).send({ message: 'Order created successfully', order: newOrder });
