@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useAddOrderMutation } from '../../redux/features/orders/order.Api';
+import Swal from 'sweetalert2';
 
 const CheckoutPage = () => {
   const cartItems = useSelector(state => state.cart.cartItems);
@@ -11,24 +13,48 @@ const CheckoutPage = () => {
 
   const { register, handleSubmit, setValue } = useForm();
   const [isChecked, setIsChecked] = useState(false);
+  const [createOrder, { isLoading }] = useAddOrderMutation();
+  const navigate = useNavigate();
 
-  const onSubmit = data => {
+  const onSubmit = async data => {
     const newOrder = {
       name: data.name,
       email: data.email,
-      address: {
-        city: data.city,
-        country: data.country,
-        state: data.state,
-        street: data.street,
-        zipcode: data.zipcode,
-      },
+      address: data.address,
+      city: data.city,
+      country: data.country,
+      state: data.state,
+      zipcode: data.zipcode,
       phone: data.phone,
       productIds: cartItems.map(item => item?._id),
       totalPrice: totalPrice,
     };
     console.log(newOrder);
+
+    try {
+      if (newOrder.productIds.length === 0) {
+        throw new Error('Cart is empty');
+      }
+      await createOrder(newOrder).unwrap();
+      Swal.fire({
+        title: 'Order created successfully',
+        icon: 'success',
+        showConfirmButton: true,
+        timer: 1500,
+      });
+      navigate('/orders');
+    } catch (error) {
+      console.error(`Error creating and order: ${error}`);
+      Swal.fire({
+        title: `Error creating and order: ${error}`,
+        icon: 'error',
+        showCancelButton: true,
+        showConfirmButton: false,
+      });
+    }
   };
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
@@ -47,11 +73,11 @@ const CheckoutPage = () => {
                 setValue('name', 'Full Name');
                 setValue('email', 'test@test.test');
                 setValue('phone', '1231231231');
-                setValue('address.street', '123 Evergreen Terr');
-                setValue('address.city', 'Springfield');
-                setValue('address.country', 'USA');
-                setValue('address.state', 'USA');
-                setValue('address.zipcode', '53535');
+                setValue('address', '123 Evergreen Terr');
+                setValue('city', 'Springfield');
+                setValue('country', 'USA');
+                setValue('state', 'USA');
+                setValue('zipcode', '53535');
               }}
             >
               Test Data
@@ -106,7 +132,7 @@ const CheckoutPage = () => {
                   <div className="md:col-span-3">
                     <label htmlFor="address">Address / Street</label>
                     <input
-                      {...register('address.street', { required: true })}
+                      {...register('address', { required: true })}
                       type="text"
                       name="address"
                       id="address"
@@ -118,7 +144,7 @@ const CheckoutPage = () => {
                   <div className="md:col-span-2">
                     <label htmlFor="city">City</label>
                     <input
-                      {...register('address.city', { required: true })}
+                      {...register('city', { required: true })}
                       type="text"
                       name="city"
                       id="city"
@@ -131,7 +157,7 @@ const CheckoutPage = () => {
                     <label htmlFor="country">Country / region</label>
                     <div className="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
                       <input
-                        {...register('address.country', { required: true })}
+                        {...register('country', { required: true })}
                         name="country"
                         id="country"
                         placeholder="Country"
@@ -177,7 +203,7 @@ const CheckoutPage = () => {
                     <label htmlFor="state">State / province</label>
                     <div className="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
                       <input
-                        {...register('address.state', { required: true })}
+                        {...register('state', { required: true })}
                         name="state"
                         id="state"
                         placeholder="State"
@@ -219,7 +245,7 @@ const CheckoutPage = () => {
                   <div className="md:col-span-1">
                     <label htmlFor="zipcode">Zipcode</label>
                     <input
-                      {...register('address.zipcode', { required: true })}
+                      {...register('zipcode', { required: true })}
                       type="text"
                       name="zipcode"
                       id="zipcode"
