@@ -5,6 +5,7 @@ import Login from '../pages/login/Login';
 import Register from '../pages/login/Register';
 import Cart from '../pages/books/CartPage';
 import CheckoutPage from '../pages/books/CheckoutPage';
+import SingleBook from '../pages/books/SingleBook';
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,8 @@ export const router = createBrowserRouter([
       { path: '/dashboard', element: <h1>Dashboard</h1> },
       { path: '/login', element: <Login /> },
       { path: '/register', element: <Register /> },
+      { path: '/books/:id', element: <SingleBook /> },
+      { path: '*', element: <h1>404</h1> },
     ],
   },
 ]);

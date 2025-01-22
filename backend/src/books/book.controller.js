@@ -25,7 +25,7 @@ const getAllBooks = async (req, res) => {
 const getABook = async (req, res) => {
   try {
     const book = await Book.findById(req.params.id);
-    res.status(200).send({ message: 'Book fetched successfully', book });
+    res.status(200).send(book);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: error.message });
