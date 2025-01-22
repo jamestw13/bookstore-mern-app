@@ -17,15 +17,23 @@ const ordersApi = createApi({
   reducerPath: 'orderApi',
   baseQuery,
   tagTypes: ['Orders'],
+
   endpoints: builder => ({
     fetchAllOrders: builder.query({
       query: () => '/',
       providesTags: ['Orders'],
     }),
+
     fetchOrderById: builder.query({
       query: id => `/${id}`,
       providesTags: (results, error, id) => [{ type: 'Orders', id }],
     }),
+
+    fetchOrderByUser: builder.query({
+      query: email => `/email/${email}`,
+      providesTags: (results, error, id) => [{ type: 'Orders', id }],
+    }),
+
     addOrder: builder.mutation({
       query: newOrder => ({
         url: '/create-order',
@@ -34,6 +42,7 @@ const ordersApi = createApi({
       }),
       invalidatesTags: ['Orders'],
     }),
+
     updateOrder: builder.mutation({
       query: ({ id, ...rest }) => ({
         url: `/edit/${id}`,
@@ -45,6 +54,7 @@ const ordersApi = createApi({
       }),
       invalidatesTags: ['Orders'],
     }),
+
     deleteOrder: builder.mutation({
       query: id => ({
         url: `/${id}`,
@@ -58,6 +68,7 @@ const ordersApi = createApi({
 export const {
   useFetchAllOrdersQuery,
   useFetchOrderByIdQuery,
+  useFetchOrderByUserQuery,
   useAddOrderMutation,
   useUpdateOrderMutation,
   useDeleteOrderMutation,

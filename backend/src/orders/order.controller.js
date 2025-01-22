@@ -32,6 +32,19 @@ const getAnOrder = async (req, res) => {
   }
 };
 
+const getOrdersByUser = async (req, res) => {
+  try {
+    const order = await Order.find({ email: req.params.email }).sort({ createdAt: -1 });
+    if (!order) {
+      throw new Error({ status: 404, message: 'Order not found' });
+    }
+    res.status(200).send(order);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: error.message });
+  }
+};
+
 const editAnOrder = async (req, res) => {
   try {
     const updatedOrder = await Order.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -66,4 +79,5 @@ module.exports = {
   getAnOrder,
   editAnOrder,
   deleteAnOrder,
+  getOrdersByUser,
 };

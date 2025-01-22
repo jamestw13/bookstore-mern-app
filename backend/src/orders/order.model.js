@@ -9,6 +9,7 @@ const orderSchema = new mongoose.Schema(
     city: { type: String, required: true },
     state: { type: String, required: true },
     zipcode: { type: Number, required: true },
+    country: { type: String, required: true },
     productIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true }],
     totalPrice: { type: Number, required: true },
   },

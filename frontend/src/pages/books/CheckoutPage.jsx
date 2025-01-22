@@ -76,7 +76,7 @@ const CheckoutPage = () => {
                 setValue('address', '123 Evergreen Terr');
                 setValue('city', 'Springfield');
                 setValue('country', 'USA');
-                setValue('state', 'USA');
+                setValue('state', 'DN');
                 setValue('zipcode', '53535');
               }}
             >
