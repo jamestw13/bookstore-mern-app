@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaGoogle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { set, useForm } from 'react-hook-form';
 import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
   const [message, setMessage] = useState('');
-  const { registerUser } = useAuth();
+  const { registerUser, signInWithGoogle } = useAuth();
   const { register, handleSubmit, watch } = useForm();
   const navigate = useNavigate();
 
@@ -25,7 +25,14 @@ const Login = () => {
     setMessage('');
   }, [email, password]);
 
-  const handleGoogleSignIn = () => {};
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+      navigate('/');
+    } catch (error) {
+      alert(`Error signing in with Google: ${error.message}`);
+    }
+  };
 
   return (
     <div className="h-[calc(100vh-120px)] flex justify-center items-center">

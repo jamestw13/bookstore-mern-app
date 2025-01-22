@@ -4,9 +4,10 @@ import { HiMiniBars3CenterLeft, HiOutlineHeart, HiOutlineUser, HiOutlineShopping
 import { IoSearchOutline } from 'react-icons/io5';
 import avatarImg from '../assets/avatar.png';
 import { useSelector } from 'react-redux';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
-  const currentUser = false;
+  const { currentUser, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const cartItems = useSelector(state => state.cart.cartItems);
 
@@ -16,6 +17,10 @@ const Navbar = () => {
     { name: 'Cart Page', href: '/cart' },
     { name: 'Check Out', href: '/checkout' },
   ];
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <header className="max-w-screen-2xl mx-auto px-4 py-6 di">
@@ -65,6 +70,11 @@ const Navbar = () => {
                           </Link>
                         </li>
                       ))}
+                      <li className="py-2">
+                        <button onClick={handleLogout} className="block px-4 py-2 text-sm hover:bg-gray-100">
+                          Logout
+                        </button>
+                      </li>
                     </ul>
                   </div>
                 )}
